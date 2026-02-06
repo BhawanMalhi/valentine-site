@@ -23,6 +23,26 @@ body{
     radial-gradient(900px 450px at 80% 10%, rgba(255,116,168,.25), transparent 55%),
     linear-gradient(180deg, var(--bg1), var(--bg2));
 }
+.photo-bg{
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(10px) saturate(1.05);
+  transform: scale(1.08);
+  opacity: 0.55;
+  transition: background-image 700ms ease, opacity 700ms ease;
+}
+
+/* soft pink overlay so text stays readable */
+.photo-bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(180deg, rgba(255,224,236,.72), rgba(255,246,251,.80));
+}
+
 
 .wrap{
   min-height:100%;
@@ -30,6 +50,8 @@ body{
   place-items:center;
   padding:28px 16px 20px;
   position:relative;
+   z-index: 1;
+
 }
 
 .card{
@@ -108,10 +130,11 @@ body{
   display:flex;
   justify-content:center;
   gap:12px;
-  position:relative;
+  position:relative;     /* IMPORTANT */
   z-index:2;
   margin-top:6px;
-  min-height:52px;
+  min-height:140px;      /* gives space so button stays inside */
+  align-items:center;
 }
 
 .btn{
@@ -142,8 +165,12 @@ body{
   background:#fff;
   color:var(--text);
   border:1px solid var(--stroke);
-  position:relative;
+  position:absolute;     /* IMPORTANT: allow free movement */
+  left:50%;
+  top:50%;
+  transform: translate(-50%, -50%);
 }
+
 
 .dark{
   background:#1f1f25;

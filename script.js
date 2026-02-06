@@ -6,6 +6,28 @@ const counterText = document.getElementById("counterText");
 const confettiBtn = document.getElementById("confettiBtn");
 const heartBtn = document.getElementById("heartBtn");
 const heartsLayer = document.querySelector(".hearts");
+// Background slideshow (your 3 photos)
+const bgEl = document.querySelector(".photo-bg");
+const bgPhotos = ["couple1.jpeg", "couple2.jpeg", "couple3.jpeg"];
+let bgIndex = 0;
+
+function setBackground(i) {
+  bgEl.style.opacity = "0.35";
+  setTimeout(() => {
+    bgEl.style.backgroundImage = `url("${bgPhotos[i]}")`;
+    bgEl.style.opacity = "0.55";
+  }, 200);
+}
+
+// start
+setBackground(bgIndex);
+
+// change every 4 seconds
+setInterval(() => {
+  bgIndex = (bgIndex + 1) % bgPhotos.length;
+  setBackground(bgIndex);
+}, 4000);
+
 
 let noCount = 0;
 
@@ -62,32 +84,47 @@ function spawnHeart() {
 /* Start gentle heart animation in the background */
 let heartInterval = setInterval(spawnHeart, 850);
 
-/* Make "No" button dodge */
 function moveNoButton() {
   noCount++;
   updateCounter();
 
-  const containerRect = buttons.getBoundingClientRect();
-  const btnRect = noBtn.getBoundingClientRect();
+  // Move inside the buttons container so it never disappears off-screen
+  const area = buttons.getBoundingClientRect();
+  const btn = noBtn.getBoundingClientRect();
 
-  const maxX = Math.max(0, containerRect.width - btnRect.width);
-  const maxY = 120;
+  const padding = 8;
 
-  const x = Math.random() * maxX;
-  const y = (Math.random() * maxY) - 40;
+  const maxX = area.width - btn.width - padding * 2;
+  const maxY = area.height - btn.height - padding * 2;
 
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  const x = padding + Math.random() * Math.max(0, maxX);
+  const y = padding + Math.random() * Math.max(0, maxY);
 
-  // tiny shake for fun
-  noBtn.style.filter = "brightness(0.98)";
-  setTimeout(() => (noBtn.style.filter = ""), 120);
+  // Because .no is position:absolute, we set left/top directly
+  noBtn.style.left = `${x}px`;
+  noBtn.style.top = `${y}px`;
+
+  // Small “wiggle” feedback
+  noBtn.animate(
+    [{ transform: "translate(-50%, -50%) rotate(0deg)" },
+     { transform: "translate(-50%, -50%) rotate(3deg)" },
+     { transform: "translate(-50%, -50%) rotate(-3deg)" },
+     { transform: "translate(-50%, -50%) rotate(0deg)" }],
+    { duration: 180 }
+  );
 }
 
+// It dodges on hover AND on attempted click
 noBtn.addEventListener("mouseenter", moveNoButton);
+noBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  moveNoButton();
+});
 noBtn.addEventListener("touchstart", (e) => {
   e.preventDefault();
   moveNoButton();
 });
+
 
 yesBtn.addEventListener("click", () => {
   buttons.classList.add("hidden");
