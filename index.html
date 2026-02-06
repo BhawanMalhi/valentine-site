@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Be My Valentine 💗</title>
 
-  <!-- Premium cute fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -17,68 +16,104 @@
 </head>
 
 <body>
-    <div class="photo-bg" aria-hidden="true"></div>
+  <!-- background slideshow -->
+  <div class="photo-bg" aria-hidden="true"></div>
 
-  <!-- floating heart layer -->
+  <!-- floating hearts -->
   <div class="hearts" aria-hidden="true"></div>
 
   <main class="wrap">
     <section class="card" id="card">
       <div class="badge">💌 Valentine Note</div>
 
-      <h1 class="title" id="title">
-        Will you be my Valentine?
-        <span class="sparkle">💖</span>
-      </h1>
+      <!-- PAGE 1 -->
+      <section id="page1">
+        <h1 class="title pillTitle">
+          Will you be my Valentine? <span class="sparkle">💖</span>
+        </h1>
 
-      <p class="subtitle" id="subtitle">
-        I made a tiny website just for you.
-      </p>
+        <p class="subtitle">I made a tiny website just for you.</p>
 
-      <div class="divider"></div>
+        <div class="divider"></div>
 
-      <div class="buttons" id="buttons">
-        <button class="btn yes" id="yesBtn">
-          Yes <span>🥰</span>
-        </button>
+        <div class="buttonsArea" id="buttonsArea">
+          <button class="btn yes" id="yesBtn">Yes 🥰</button>
+          <button class="btn no" id="noBtn">No 🙃</button>
+        </div>
 
-        <button class="btn no" id="noBtn">
-          No <span>🙃</span>
-        </button>
-      </div>
+        <p class="counter" id="counterText"></p>
+      </section>
 
-      <p class="counter" id="counterText"></p>
+      <!-- PAGE 2 -->
+      <section id="page2" class="hidden">
+        <button class="backTop" id="backBtn">← Back</button>
 
-      <section class="result hidden" id="result">
-  <div class="big">YAY!! <span>🎉💘</span></div>
+        <div class="big center">
+          YAY!! <span>🎉💘</span>
+        </div>
 
-  <p class="loveText">
-    I would be honored to be your Valentine. 💗
-  </p>
+        <p class="loveText center" id="honoredText">
+          I’m honoured to be your Valentine 💗
+        </p>
 
-  <!-- Photo slideshow -->
-  <div class="slideshow" aria-label="Our photos">
-    <img id="slideImg" src="couple1.jpeg" alt="Us" />
-    <div class="dots" id="dots"></div>
-  </div>
+        <div class="panel">
+          <!-- Accordion 1 -->
+          <button class="accordionBtn" id="reasonsBtn" aria-expanded="false">
+            Reasons I’m madly in love with you
+            <span class="chev" id="chev1">▾</span>
+          </button>
 
-  <div class="panel">
-    <h3>Things I love about you</h3>
-    <ul class="list" id="reasons">
-      <li>You make me feel safe.</li>
-      <li>You always support me.</li>
-      <li>You make me laugh.</li>
-      <li>You’re my favorite person.</li>
-    </ul>
+          <div class="accordionBody hidden" id="reasonsBody">
+            <ul class="list">
+              <li>Your eyes.</li>
+              <li>Your love for me.</li>
+              <li>Your intelligence.</li>
+              <li>The way you love food.</li>
+              <li>The way you never get angry at me.</li>
+              <li>The way you always say yes to everything I ask to buy.</li>
+            </ul>
+          </div>
 
-    <div class="actions">
-      <button class="btn dark" id="confettiBtn">More sparkles ✨</button>
-      <button class="btn ghost" id="heartBtn">Send hearts 💗</button>
-      <button class="btn back" id="backBtn">⬅ Back</button>
-    </div>
-  </div>
-</section>
+          <!-- Accordion 2 -->
+          <button class="accordionBtn" id="giftBtn" aria-expanded="false">
+            Redeem your Valentine gift (choose one)
+            <span class="chev" id="chev2">▾</span>
+          </button>
 
+          <div class="accordionBody hidden" id="giftBody">
+            <form class="giftForm" id="giftForm">
+              <label class="giftOption">
+                <input type="radio" name="gift" value="I will always be your Valentine for life 💗" />
+                <span>I will always be your Valentine for life 💗</span>
+              </label>
+
+              <label class="giftOption">
+                <input type="radio" name="gift" value="Rolex, car, big house, and 20K (when I can afford it… or on your card 😄)" />
+                <span>Rolex, car, big house, and 20K (when I can afford it… or on your card 😄)</span>
+              </label>
+
+              <label class="giftOption">
+                <input type="radio" name="gift" value="A full day pass of me doing whatever you want (including late night snack 🍟)" />
+                <span>A full day pass of me doing whatever you want (including late night snack 🍟)</span>
+              </label>
+
+              <button type="button" class="btn dark full" id="confirmGiftBtn">
+                Confirm my choice ✨
+              </button>
+            </form>
+
+            <div class="giftResult hidden" id="giftResult">
+              <div class="giftBadge">✅ Redeemed</div>
+              <p class="giftText" id="giftText"></p>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn dark" id="sparkBtn">More sparkles ✨</button>
+            <button class="btn ghost" id="heartBtn">Send hearts 💗</button>
+          </div>
+        </div>
+      </section>
     </section>
 
     <p class="footerNote">Made with love 💗</p>
