@@ -1,83 +1,69 @@
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
-const result = document.getElementById("result");
-const buttons = document.getElementById("buttons");
 const counterText = document.getElementById("counterText");
-const confettiBtn = document.getElementById("confettiBtn");
-const heartBtn = document.getElementById("heartBtn");
-const heartsLayer = document.querySelector(".hearts");
-// Background slideshow (your 3 photos)
-const bgEl = document.querySelector(".photo-bg");
-const bgPhotos = ["couple1.jpeg", "couple2.jpeg", "couple3.jpeg"];
 
+const page1 = document.getElementById("page1");
+const page2 = document.getElementById("page2");
 
 const backBtn = document.getElementById("backBtn");
-const slideImg = document.getElementById("slideImg");
-const dotsEl = document.getElementById("dots");
+const sparkBtn = document.getElementById("sparkBtn");
+const heartBtn = document.getElementById("heartBtn");
 
-const slides = ["couple1.jpeg", "couple2.jpeg", "couple3.jpeg"];
-let slideIndex = 0;
-let slideTimer = null;
+const reasonsBtn = document.getElementById("reasonsBtn");
+const reasonsBody = document.getElementById("reasonsBody");
+const chev1 = document.getElementById("chev1");
 
-function renderDots(){
-  dotsEl.innerHTML = "";
-  slides.forEach((_, i) => {
-    const d = document.createElement("div");
-    d.className = "dot" + (i === slideIndex ? " active" : "");
-    dotsEl.appendChild(d);
-  });
-}
+const giftBtn = document.getElementById("giftBtn");
+const giftBody = document.getElementById("giftBody");
+const chev2 = document.getElementById("chev2");
 
-function showSlide(i){
-  slideIndex = i;
-  slideImg.style.opacity = "0";
-  setTimeout(() => {
-    slideImg.src = slides[slideIndex];
-    renderDots();
-    slideImg.style.opacity = "1";
-  }, 180);
-}
+const confirmGiftBtn = document.getElementById("confirmGiftBtn");
+const giftForm = document.getElementById("giftForm");
+const giftResult = document.getElementById("giftResult");
+const giftText = document.getElementById("giftText");
 
-function startSlideshow(){
-  if (slideTimer) clearInterval(slideTimer);
-  slideTimer = setInterval(() => {
-    slideIndex = (slideIndex + 1) % slides.length;
-    showSlide(slideIndex);
-  }, 1800); // 1.8 seconds (change to 1500 or 2000 if you want)
-}
-function stopSlideshow(){
-  if (slideTimer) clearInterval(slideTimer);
-  slideTimer = null;
-}
-
-
-let bgIndex = 0;
-
-function setBackground(i) {
-  bgEl.style.opacity = "0.35";
-  setTimeout(() => {
-    bgEl.style.backgroundImage = `url("${bgPhotos[i]}")`;
-    bgEl.style.opacity = "0.55";
-  }, 200);
-}
-
-// start
-setBackground(bgIndex);
-
-// change every 4 seconds
-setInterval(() => {
-  bgIndex = (bgIndex + 1) % bgPhotos.length;
-  setBackground(bgIndex);
-}, 4000);
-
+const heartsLayer = document.querySelector(".hearts");
+const bgEl = document.querySelector(".photo-bg");
+const playZone = document.getElementById("playZone");
 
 let noCount = 0;
 
-function updateCounter() {
-  counterText.textContent = noCount ? `No attempts: ${noCount} 😅` : "";
-}
+/* ---------- Background slideshow (couple1 -> couple14) ---------- */
+const bgPhotos = Array.from({ length: 14 }, (_, i) => `couple${i + 1}.jpeg`);
+let bgIndex = 0;
 
-/* Premium sparkles */
+function setBackground(i) {
+  bgEl.style.backgroundImage = `url("${bgPhotos[i]}")`;
+}
+setBackground(bgIndex);
+
+setInterval(() => {
+  bgIndex = (bgIndex + 1) % bgPhotos.length;
+  setBackground(bgIndex);
+}, 1800);
+
+/* ---------- Hearts automation ---------- */
+function spawnHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  const emojis = ["💗", "💖", "💘", "💕", "💞"];
+  heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+  heart.style.left = `${Math.random() * 100}vw`;
+  heart.style.bottom = `-20px`;
+
+  const duration = 6 + Math.random() * 5;
+  heart.style.animationDuration = `${duration}s`;
+
+  const size = 14 + Math.random() * 18;
+  heart.style.fontSize = `${size}px`;
+
+  heartsLayer.appendChild(heart);
+  setTimeout(() => heart.remove(), duration * 1000);
+}
+let heartInterval = setInterval(spawnHeart, 950);
+
+/* ---------- Sparkles ---------- */
 function popSparkles(amount = 28) {
   const card = document.getElementById("card");
   const rect = card.getBoundingClientRect();
@@ -89,7 +75,7 @@ function popSparkles(amount = 28) {
     dot.style.left = `${x}px`;
     dot.style.top = `-8px`;
 
-    const colors = ["#ff4d8d", "#ffd1e3", "#ffcc66", "#78ddff", "#c58bff"];
+    const colors = ["#ff2f7a", "#ffd1e3", "#ffcc66", "#78ddff", "#c58bff"];
     dot.style.background = colors[Math.floor(Math.random() * colors.length)];
 
     const size = 6 + Math.random() * 10;
@@ -103,38 +89,18 @@ function popSparkles(amount = 28) {
   }
 }
 
-/* Floating hearts automation */
-function spawnHeart() {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  const emojis = ["💗", "💖", "💘", "💕", "💞"];
-  heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-
-  heart.style.left = `${Math.random() * 100}vw`;
-  heart.style.bottom = `-20px`;
-
-  const duration = 6 + Math.random() * 5; // 6-11s
-  heart.style.animationDuration = `${duration}s`;
-
-  const size = 14 + Math.random() * 18;
-  heart.style.fontSize = `${size}px`;
-
-  heartsLayer.appendChild(heart);
-  setTimeout(() => heart.remove(), duration * 1000);
+/* ---------- No button dodges forever (inside playZone) ---------- */
+function updateCounter() {
+  counterText.textContent = noCount ? `No attempts: ${noCount} 😅` : "";
 }
-
-/* Start gentle heart animation in the background */
-let heartInterval = setInterval(spawnHeart, 850);
 
 function moveNoButton() {
   noCount++;
   updateCounter();
 
-  // Move inside the buttons container so it never disappears off-screen
-  const area = buttons.getBoundingClientRect();
+  const area = playZone.getBoundingClientRect();
   const btn = noBtn.getBoundingClientRect();
-
-  const padding = 8;
+  const padding = 12;
 
   const maxX = area.width - btn.width - padding * 2;
   const maxY = area.height - btn.height - padding * 2;
@@ -142,64 +108,70 @@ function moveNoButton() {
   const x = padding + Math.random() * Math.max(0, maxX);
   const y = padding + Math.random() * Math.max(0, maxY);
 
-  // Because .no is position:absolute, we set left/top directly
   noBtn.style.left = `${x}px`;
   noBtn.style.top = `${y}px`;
 
-  // Small “wiggle” feedback
   noBtn.animate(
-    [{ transform: "translate(-50%, -50%) rotate(0deg)" },
-     { transform: "translate(-50%, -50%) rotate(3deg)" },
-     { transform: "translate(-50%, -50%) rotate(-3deg)" },
-     { transform: "translate(-50%, -50%) rotate(0deg)" }],
-    { duration: 180 }
+    [
+      { transform: "translate(-50%, -50%) rotate(0deg)" },
+      { transform: "translate(-50%, -50%) rotate(3deg)" },
+      { transform: "translate(-50%, -50%) rotate(-3deg)" },
+      { transform: "translate(-50%, -50%) rotate(0deg)" }
+    ],
+    { duration: 160 }
   );
 }
 
-// It dodges on hover AND on attempted click
 noBtn.addEventListener("mouseenter", moveNoButton);
-noBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  moveNoButton();
-});
-noBtn.addEventListener("touchstart", (e) => {
-  e.preventDefault();
-  moveNoButton();
-});
+noBtn.addEventListener("click", (e) => { e.preventDefault(); moveNoButton(); });
+noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveNoButton(); });
 
+updateCounter();
 
+/* ---------- Page switch (YES must work) ---------- */
 yesBtn.addEventListener("click", () => {
-  buttons.classList.add("hidden");
-  counterText.textContent = "";
-  result.classList.remove("hidden");
-  
+  page1.classList.add("hidden");
+  page2.classList.remove("hidden");
+  popSparkles(50);
 
-
-  // “automation” feel: sparkle burst + faster hearts for a moment
-  popSparkles(45);
-showSlide(0);
-startSlideshow();
   clearInterval(heartInterval);
-  heartInterval = setInterval(spawnHeart, 350);
+  heartInterval = setInterval(spawnHeart, 300);
   setTimeout(() => {
     clearInterval(heartInterval);
-    heartInterval = setInterval(spawnHeart, 850);
-  }, 4500);
+    heartInterval = setInterval(spawnHeart, 950);
+  }, 4200);
 });
 
-confettiBtn.addEventListener("click", () => popSparkles(32));
-
-heartBtn.addEventListener("click", () => {
-  for (let i = 0; i < 14; i++) setTimeout(spawnHeart, i * 90);
-});
+/* ---------- Back ---------- */
 backBtn.addEventListener("click", () => {
-  stopSlideshow();
-  result.classList.add("hidden");
-  buttons.classList.remove("hidden");
-  // reset no button to center
-  noBtn.style.left = "50%";
-  noBtn.style.top = "50%";
+  page2.classList.add("hidden");
+  page1.classList.remove("hidden");
+
+  noBtn.style.left = "68%";
+  noBtn.style.top = "58%";
   noBtn.style.transform = "translate(-50%, -50%)";
 });
 
-updateCounter();
+/* ---------- Accordions ---------- */
+function toggleAccordion(btn, body, chev) {
+  const open = !body.classList.contains("hidden");
+  body.classList.toggle("hidden");
+  btn.setAttribute("aria-expanded", String(!open));
+  chev.textContent = open ? "▾" : "▴";
+}
+reasonsBtn.addEventListener("click", () => toggleAccordion(reasonsBtn, reasonsBody, chev1));
+giftBtn.addEventListener("click", () => toggleAccordion(giftBtn, giftBody, chev2));
+
+/* ---------- Gift selection ---------- */
+confirmGiftBtn.addEventListener("click", () => {
+  const chosen = giftForm.querySelector('input[name="gift"]:checked');
+  giftResult.classList.remove("hidden");
+  giftText.textContent = chosen ? `You chose: ${chosen.value}` : "Pick one gift option first 😄";
+  popSparkles(18);
+});
+
+/* ---------- Extra buttons ---------- */
+sparkBtn.addEventListener("click", () => popSparkles(28));
+heartBtn.addEventListener("click", () => {
+  for (let i = 0; i < 14; i++) setTimeout(spawnHeart, i * 90);
+});

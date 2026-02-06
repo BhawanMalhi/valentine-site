@@ -11,15 +11,14 @@
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap"
     rel="stylesheet"
   />
-
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <!-- background slideshow -->
+  <!-- Background slideshow -->
   <div class="photo-bg" aria-hidden="true"></div>
 
-  <!-- floating hearts -->
+  <!-- Floating hearts -->
   <div class="hearts" aria-hidden="true"></div>
 
   <main class="wrap">
@@ -28,15 +27,15 @@
 
       <!-- PAGE 1 -->
       <section id="page1">
-        <h1 class="title pillTitle">
+        <h1 class="title">
           Will you be my Valentine? <span class="sparkle">💖</span>
         </h1>
-
         <p class="subtitle">I made a tiny website just for you.</p>
 
         <div class="divider"></div>
 
-        <div class="buttonsArea" id="buttonsArea">
+        <!-- SAFE PLAY ZONE (buttons will never overlap text) -->
+        <div class="playZone" id="playZone">
           <button class="btn yes" id="yesBtn">Yes 🥰</button>
           <button class="btn no" id="noBtn">No 🙃</button>
         </div>
@@ -48,21 +47,14 @@
       <section id="page2" class="hidden">
         <button class="backTop" id="backBtn">← Back</button>
 
-        <div class="big center">
-          YAY!! <span>🎉💘</span>
-        </div>
-
-        <p class="loveText center" id="honoredText">
-          I’m honoured to be your Valentine 💗
-        </p>
+        <div class="big center">YAY!! <span>🎉💘</span></div>
+        <p class="loveText center">I’m honoured to be your Valentine 💗</p>
 
         <div class="panel">
-          <!-- Accordion 1 -->
           <button class="accordionBtn" id="reasonsBtn" aria-expanded="false">
             Reasons I’m madly in love with you
             <span class="chev" id="chev1">▾</span>
           </button>
-
           <div class="accordionBody hidden" id="reasonsBody">
             <ul class="list">
               <li>Your eyes.</li>
@@ -70,11 +62,10 @@
               <li>Your intelligence.</li>
               <li>The way you love food.</li>
               <li>The way you never get angry at me.</li>
-              <li>The way you always say yes to everything I ask to buy.</li>
+              <li>The way you always say yes to what I ask to buy.</li>
             </ul>
           </div>
 
-          <!-- Accordion 2 -->
           <button class="accordionBtn" id="giftBtn" aria-expanded="false">
             Redeem your Valentine gift (choose one)
             <span class="chev" id="chev2">▾</span>
