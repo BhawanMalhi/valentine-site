@@ -9,6 +9,48 @@ const heartsLayer = document.querySelector(".hearts");
 // Background slideshow (your 3 photos)
 const bgEl = document.querySelector(".photo-bg");
 const bgPhotos = ["couple1.jpeg", "couple2.jpeg", "couple3.jpeg"];
+
+
+const backBtn = document.getElementById("backBtn");
+const slideImg = document.getElementById("slideImg");
+const dotsEl = document.getElementById("dots");
+
+const slides = ["couple1.jpeg", "couple2.jpeg", "couple3.jpeg"];
+let slideIndex = 0;
+let slideTimer = null;
+
+function renderDots(){
+  dotsEl.innerHTML = "";
+  slides.forEach((_, i) => {
+    const d = document.createElement("div");
+    d.className = "dot" + (i === slideIndex ? " active" : "");
+    dotsEl.appendChild(d);
+  });
+}
+
+function showSlide(i){
+  slideIndex = i;
+  slideImg.style.opacity = "0";
+  setTimeout(() => {
+    slideImg.src = slides[slideIndex];
+    renderDots();
+    slideImg.style.opacity = "1";
+  }, 180);
+}
+
+function startSlideshow(){
+  if (slideTimer) clearInterval(slideTimer);
+  slideTimer = setInterval(() => {
+    slideIndex = (slideIndex + 1) % slides.length;
+    showSlide(slideIndex);
+  }, 1800); // 1.8 seconds (change to 1500 or 2000 if you want)
+}
+function stopSlideshow(){
+  if (slideTimer) clearInterval(slideTimer);
+  slideTimer = null;
+}
+
+
 let bgIndex = 0;
 
 function setBackground(i) {
@@ -130,10 +172,13 @@ yesBtn.addEventListener("click", () => {
   buttons.classList.add("hidden");
   counterText.textContent = "";
   result.classList.remove("hidden");
+  
+
 
   // “automation” feel: sparkle burst + faster hearts for a moment
   popSparkles(45);
-
+showSlide(0);
+startSlideshow();
   clearInterval(heartInterval);
   heartInterval = setInterval(spawnHeart, 350);
   setTimeout(() => {
@@ -146,6 +191,15 @@ confettiBtn.addEventListener("click", () => popSparkles(32));
 
 heartBtn.addEventListener("click", () => {
   for (let i = 0; i < 14; i++) setTimeout(spawnHeart, i * 90);
+});
+backBtn.addEventListener("click", () => {
+  stopSlideshow();
+  result.classList.add("hidden");
+  buttons.classList.remove("hidden");
+  // reset no button to center
+  noBtn.style.left = "50%";
+  noBtn.style.top = "50%";
+  noBtn.style.transform = "translate(-50%, -50%)";
 });
 
 updateCounter();
