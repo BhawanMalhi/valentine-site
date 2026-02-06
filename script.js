@@ -4,45 +4,65 @@ const result = document.getElementById("result");
 const buttons = document.getElementById("buttons");
 const counterText = document.getElementById("counterText");
 const confettiBtn = document.getElementById("confettiBtn");
+const heartBtn = document.getElementById("heartBtn");
+const heartsLayer = document.querySelector(".hearts");
 
 let noCount = 0;
 
 function updateCounter() {
-  if (noCount === 0) counterText.textContent = "";
-  else counterText.textContent = `No attempts: ${noCount} 😅`;
+  counterText.textContent = noCount ? `No attempts: ${noCount} 😅` : "";
 }
 
-function popConfetti(amount = 25) {
+/* Premium sparkles */
+function popSparkles(amount = 28) {
   const card = document.getElementById("card");
   const rect = card.getBoundingClientRect();
 
   for (let i = 0; i < amount; i++) {
     const dot = document.createElement("div");
-    dot.className = "confetti";
-
-    // random position near the top
+    dot.className = "spark";
     const x = Math.random() * (rect.width - 10);
     dot.style.left = `${x}px`;
     dot.style.top = `-8px`;
 
-    // random color
-    const colors = ["#ff4d88", "#ffd1e1", "#ffcc00", "#66d9ff", "#b56bff"];
+    const colors = ["#ff4d8d", "#ffd1e3", "#ffcc66", "#78ddff", "#c58bff"];
     dot.style.background = colors[Math.floor(Math.random() * colors.length)];
 
-    // random size
     const size = 6 + Math.random() * 10;
     dot.style.width = `${size}px`;
     dot.style.height = `${size}px`;
 
-    // random fall duration
-    dot.style.animationDuration = `${700 + Math.random() * 700}ms`;
+    dot.style.animationDuration = `${650 + Math.random() * 850}ms`;
 
     card.appendChild(dot);
     setTimeout(() => dot.remove(), 1600);
   }
 }
 
-// Make the "No" button dodge the cursor/taps
+/* Floating hearts automation */
+function spawnHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  const emojis = ["💗", "💖", "💘", "💕", "💞"];
+  heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+  heart.style.left = `${Math.random() * 100}vw`;
+  heart.style.bottom = `-20px`;
+
+  const duration = 6 + Math.random() * 5; // 6-11s
+  heart.style.animationDuration = `${duration}s`;
+
+  const size = 14 + Math.random() * 18;
+  heart.style.fontSize = `${size}px`;
+
+  heartsLayer.appendChild(heart);
+  setTimeout(() => heart.remove(), duration * 1000);
+}
+
+/* Start gentle heart animation in the background */
+let heartInterval = setInterval(spawnHeart, 850);
+
+/* Make "No" button dodge */
 function moveNoButton() {
   noCount++;
   updateCounter();
@@ -50,13 +70,17 @@ function moveNoButton() {
   const containerRect = buttons.getBoundingClientRect();
   const btnRect = noBtn.getBoundingClientRect();
 
-  const maxX = containerRect.width - btnRect.width;
-  const maxY = 120; // keep it near the buttons area
+  const maxX = Math.max(0, containerRect.width - btnRect.width);
+  const maxY = 120;
 
-  const x = Math.random() * Math.max(0, maxX);
+  const x = Math.random() * maxX;
   const y = (Math.random() * maxY) - 40;
 
   noBtn.style.transform = `translate(${x}px, ${y}px)`;
+
+  // tiny shake for fun
+  noBtn.style.filter = "brightness(0.98)";
+  setTimeout(() => (noBtn.style.filter = ""), 120);
 }
 
 noBtn.addEventListener("mouseenter", moveNoButton);
@@ -66,12 +90,25 @@ noBtn.addEventListener("touchstart", (e) => {
 });
 
 yesBtn.addEventListener("click", () => {
-  // Hide buttons, show result
   buttons.classList.add("hidden");
+  counterText.textContent = "";
   result.classList.remove("hidden");
-  popConfetti(40);
+
+  // “automation” feel: sparkle burst + faster hearts for a moment
+  popSparkles(45);
+
+  clearInterval(heartInterval);
+  heartInterval = setInterval(spawnHeart, 350);
+  setTimeout(() => {
+    clearInterval(heartInterval);
+    heartInterval = setInterval(spawnHeart, 850);
+  }, 4500);
 });
 
-confettiBtn.addEventListener("click", () => popConfetti(30));
+confettiBtn.addEventListener("click", () => popSparkles(32));
+
+heartBtn.addEventListener("click", () => {
+  for (let i = 0; i < 14; i++) setTimeout(spawnHeart, i * 90);
+});
 
 updateCounter();

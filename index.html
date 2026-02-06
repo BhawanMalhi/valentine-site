@@ -3,45 +3,87 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Be My Valentine 💘</title>
+  <title>Be My Valentine 💗</title>
+
+  <!-- Premium cute fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-  <main class="card" id="card">
-    <h1 id="title">Will you be my Valentine? 💖</h1>
-    <p id="subtitle">I made a tiny website just for you.</p>
+  <!-- floating heart layer -->
+  <div class="hearts" aria-hidden="true"></div>
 
-    <div class="buttons" id="buttons">
-      <button class="btn yes" id="yesBtn">Yes 🥰</button>
-      <button class="btn no" id="noBtn">No 🙃</button>
-    </div>
+  <main class="wrap">
+    <section class="card" id="card">
+      <div class="badge">💌 Valentine Note</div>
 
-    <section class="result hidden" id="result">
-      <h2>YAY!! 🎉💘</h2>
-      <p>
-        I’m so lucky to have you. <br />
-        Happy Valentine’s Day, my love. 💞
+      <h1 class="title" id="title">
+        Will you be my Valentine?
+        <span class="sparkle">💖</span>
+      </h1>
+
+      <p class="subtitle" id="subtitle">
+        I made a tiny website just for you.
       </p>
 
-      <div class="extras">
-        <h3>Reasons I love you</h3>
-        <ul id="reasons">
-          <li>You make me feel safe.</li>
-          <li>You always support me.</li>
-          <li>You make me laugh.</li>
-          <li>You’re my favorite person.</li>
-        </ul>
+      <div class="divider"></div>
 
-        <h3>Your Valentine coupon 🎟️</h3>
-        <p class="coupon">Redeem for: a special date night + your favorite dessert 🍰</p>
+      <div class="buttons" id="buttons">
+        <button class="btn yes" id="yesBtn">
+          Yes <span>🥰</span>
+        </button>
 
-        <button class="btn small" id="confettiBtn">More confetti ✨</button>
+        <button class="btn no" id="noBtn">
+          No <span>🙃</span>
+        </button>
       </div>
+
+      <p class="counter" id="counterText"></p>
+
+      <section class="result hidden" id="result">
+        <div class="big">YAY!! <span>🎉💘</span></div>
+        <p class="loveText">
+          I’m so lucky to have you.<br />
+          Happy Valentine’s Day, my love. 💞
+        </p>
+
+        <div class="panel">
+          <h3>Reasons I love you</h3>
+          <ul class="list" id="reasons">
+            <li>You make me feel safe.</li>
+            <li>You always support me.</li>
+            <li>You make me laugh.</li>
+            <li>You’re my favorite person.</li>
+          </ul>
+
+          <h3 class="couponTitle">Your Valentine coupon 🎟️</h3>
+          <div class="coupon">
+            <div class="couponTop">
+              <span class="pill">Redeem anytime</span>
+              <span class="stamp">Approved ✅</span>
+            </div>
+            <p class="couponText">
+              Special date night + your favorite dessert 🍰
+            </p>
+            <p class="smallText">Code word: <strong>“PINKROSE”</strong></p>
+          </div>
+
+          <div class="actions">
+            <button class="btn dark" id="confettiBtn">More sparkles ✨</button>
+            <button class="btn ghost" id="heartBtn">Send hearts 💗</button>
+          </div>
+        </div>
+      </section>
     </section>
 
-    <footer class="footer">
-      <span id="counterText" class="counter"></span>
-    </footer>
+    <p class="footerNote">Made with love 💗</p>
   </main>
 
   <script src="script.js"></script>
