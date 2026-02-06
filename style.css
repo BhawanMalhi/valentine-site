@@ -27,7 +27,7 @@ body{
   background-position: center;
   filter: blur(0px) saturate(1.15) contrast(1.03);
   transform: scale(1.02);
-  opacity: 0.95;              /* YOU ASKED 95% */
+  opacity: 0.98;              /* YOU ASKED 95% */
   transition: background-image 650ms ease;
 }
 
@@ -79,7 +79,7 @@ body{
 
   background: rgba(255,255,255,0.14);   /* transparent */
   border: 1px solid var(--stroke);
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(3px);
   box-shadow:
     0 40px 120px rgba(0,0,0,.35),
     0 18px 40px rgba(255,47,122,.18);
@@ -98,10 +98,10 @@ body{
 
 .title{
   font-family:"Playfair Display", serif;
-  font-weight:700;
+  font-weight:600;
   margin:14px 0 6px;
-  font-size: clamp(26px, 3.6vw, 38px);
-  color: rgba(10,10,14,.92);
+  font-size: clamp(20px, 3vw, 30px);
+  color: rgba(42, 18, 31, 0.92);
   text-shadow: 0 10px 25px rgba(0,0,0,.18);
 }
 
@@ -120,9 +120,9 @@ body{
 /* PLAY ZONE so No button never overlaps text */
 .playZone{
   position: relative;
-  width: 100%;
-  max-width: 420px;
-  height: 180px;
+  width: 200%;
+  max-width: 360px;
+  height: 280px;
   margin: 0 auto;
   display:flex;
   align-items:center;
